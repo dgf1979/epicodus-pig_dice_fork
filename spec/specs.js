@@ -14,6 +14,7 @@ describe("Player", function() {
   describe("this.score", function() {
     it("will keep track of a player's score", function () {
       var john = new Player("John");
+
       expect("0123456").to.contain(john.score);
     });
   });

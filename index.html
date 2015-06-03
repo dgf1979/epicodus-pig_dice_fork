@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link href="css/styles.css" rel="stylesheet" type="text/css">
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="js/scripts.js"></script>
+    <title>Pig Dice</title>
+  </head>
+  <body>
+    <div class ="container">
+      <h1 class="page-header text-center">Pig Dice!</h1>
+      <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-center">
+        <h2 id="display-name-1">Player One</h2>
+        <form id="add-player-1">
+        <div class="input-group">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></button>
+          </span>
+          <input type="text" id="player-1-name" class="form-control" placeholder="Enter Your Name">
+        </div>
+        </form>
+        <div class="scoreboard-1">
+          <h4 id="player-1-roll"></h4>
+          <h3 id="player-1-score">#SCORE#</h3>
+          <br>
+          <span id="player-1-shake" class="btn btn-primary" role="button">Shake 'em</span>
+          <span id="player-1-hold" class="btn btn-default" role="button">Hold 'em</span>
+        </div>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-center">
+        <h2 id="display-name-2">Player Two</h2>
+        <form id="add-player-2">
+        <div class="input-group">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></button>
+          </span>
+          <input type="text" id="player-2-name" class="form-control" placeholder="Enter Your Name Here">
+        </div>
+        </form>
+        <div class="scoreboard-2">
+          <h3 id="player-2-score">#SCORE#</h3>
+          <br>
+          <span id="player-2-shake" class="btn btn-primary" role="button">Shake 'em</span>
+          <span id="player-2-hold" class="btn btn-default" role="button">Hold 'em</span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
