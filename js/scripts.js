@@ -1,16 +1,23 @@
 function Player(name) {
   this.name = name
   this.score = 0
+  this.session = 0
 }
 
 Player.prototype.roll = function() {
   var result = (Math.floor(Math.random() * 6) + 1);
   if (result > 1) {
-    this.score += result;
+    this.session += result;
   } else {
-    null;
+    this.session = 0;
   }
   return result;
+}
+
+Player.prototype.hold = function() {
+  this.score += this.session;
+  this.session = 0;
+  return this.score;
 }
 
 $(document).ready(function() {
@@ -32,22 +39,26 @@ $(document).ready(function() {
           var score = playerOne.score;
           $("#player-1-score").html('<h3>' + 'Your total score is: ' + score + '</h3>');
         } else {
-          var score = playerOne.score;
-          $("#player-1-score").html('<h3>' + 'Your total score is: '+ score + '</h3>');
-        }
-        if (score >= 100) {
-          $("#player-2-shake").hide();
-          $("#player-2-hold").hide();
-          $("#player-1-shake").hide();
-          $("#player-1-hold").hide();
-          (alert("PLAYER ONE WINS MOFO, OINK OINK")) * 10;
+          var session = playerOne.session;
+          $("#player-1-session").html('<h3>' + 'Your session score is: ' + session + '</h3>');
         }
       });
     $("#player-1-hold").click(function(event) {
-      $("#player-1-shake").hide();
-      $("#player-1-hold").hide();
-      $("#player-2-shake").show();
-      $("#player-2-hold").show();
+      score = playerOne.hold();
+      if (score >= 100) {
+        $("#player-2-shake").hide();
+        $("#player-2-hold").hide();
+        $("#player-1-shake").hide();
+        $("#player-1-hold").hide();
+        $("#player-1-score").html('<h3>' + 'Your total score is: ' + score + '</h3>');
+        alert("PLAYER ONE WINS MOFO, OINK OINK");
+      } else {
+        $("#player-1-shake").hide();
+        $("#player-1-hold").hide();
+        $("#player-2-shake").show();
+        $("#player-2-hold").show();
+        $("#player-1-score").html('<h3>' + 'Your total score is: ' + score + '</h3>');
+      }
     });
   });
 
@@ -68,22 +79,26 @@ $(document).ready(function() {
         var score = playerTwo.score;
         $("#player-2-score").html('<h3>' + 'Your total score is: ' + score + '</h3>');
       } else {
-        var score = playerTwo.score;
-        $("#player-2-score").html('<h3>'  + 'Your total score is: ' + score + '</h3>');
+        var session = playerTwo.session;
+        $("#player-2-session").html('<h3>'  + 'Your session score is: ' + session + '</h3>');
       }
+    });
+    $("#player-2-hold").click(function(event) {
+      score = playerTwo.hold();
       if (score >= 100) {
         $("#player-2-shake").hide();
         $("#player-2-hold").hide();
         $("#player-1-shake").hide();
         $("#player-1-hold").hide();
+        $("#player-2-score").html('<h3>' + 'Your total score is: ' + score + '</h3>');
         alert("PLAYER TWO WINS MOFO, OINK OINK");
+      } else {
+        $("#player-2-shake").hide();
+        $("#player-2-hold").hide();
+        $("#player-1-shake").show();
+        $("#player-1-hold").show();
+        $("#player-2-score").html('<h3>' + 'Your total score is: ' + score + '</h3>');
       }
-    });
-    $("#player-2-hold").click(function(event) {
-      $("#player-2-shake").hide();
-      $("#player-2-hold").hide();
-      $("#player-1-shake").show();
-      $("#player-1-hold").show();
     });
   });
 });
