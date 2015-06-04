@@ -14,6 +14,8 @@ simulates an online game of pig dice
 
 Frank Johnson & Paul Ogawa
 
+Day 2 edits by Chris Sefkin & Drew Finstrom
+
 ### Setup ###
 ```
     clone repo and run index.html

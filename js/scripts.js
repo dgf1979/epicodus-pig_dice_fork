@@ -154,7 +154,7 @@ $(document).ready(function() {
     //PLAYER 1 HOLDS
     $("#player-1-hold").click(function(event) {
       score = playerOne.hold();
-      if (score >= 10) {  //WIN
+      if (score >= 100) {  //WIN
         $("#player-2-shake").hide();
         $("#player-2-hold").hide();
         $("#player-1-shake").hide();
@@ -214,7 +214,7 @@ $(document).ready(function() {
     // PLAYER 2 HOLDS
     $("#player-2-hold").click(function(event) {
       score = playerTwo.hold();
-      if (score >= 10) {
+      if (score >= 100) {
         $("#player-2-shake").hide();
         $("#player-2-hold").hide();
         $("#player-1-shake").hide();
