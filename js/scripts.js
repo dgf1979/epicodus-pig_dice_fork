@@ -91,6 +91,11 @@ var win = function() {
   $(".pig").show();
   pigLoop();
   $(".background").show();
+
+  var horn = document.getElementById("party_horn");
+  horn.play();
+  var clapping = document.getElementById("clapping");
+  clapping.play();
 }
 
 
@@ -138,16 +143,18 @@ $(document).ready(function() {
           player2startTurn();
           var score = playerOne.score;
           $("#player-1-score").html('<h3>' + 'Your total score is: ' + score + '</h3>');
+          $("#player-1-session").html('<h3>' + 'Your session score is: 0</h3>');
         } else {
           var session = playerOne.session;
           $("#player-1-session").html('<h3>' + 'Your session score is: ' + session + '</h3>');
         }
+
       });
 
     //PLAYER 1 HOLDS
     $("#player-1-hold").click(function(event) {
       score = playerOne.hold();
-      if (score >= 100) {  //WIN
+      if (score >= 10) {  //WIN
         $("#player-2-shake").hide();
         $("#player-2-hold").hide();
         $("#player-1-shake").hide();
@@ -158,6 +165,7 @@ $(document).ready(function() {
       } else { //NEXT PLAYER
         player2startTurn();
         $("#player-1-score").html('<h3>' + 'Your total score is: ' + score + '</h3>');
+        $("#player-1-session").html('<h3>' + 'Your session score is: 0</h3>');
       }
     });
   });
@@ -192,19 +200,21 @@ $(document).ready(function() {
         player1startTurn();
         var score = playerTwo.score;
         $("#player-2-score").html('<h3>' + 'Your total score is: ' + score + '</h3>');
+        $("#player-2-session").html('<h3>'  + 'Your session score is: 0</h3>');
       } else {
         var session = playerTwo.session;
-        $("#player-2-session").html('<h3>'  + 'Your session score is: ' + session + '</h3>');
-
         if (aiIsPlaying === true) { aiPlay(playerTwo.session) };
+        $("#player-2-session").html('<h3>'  + 'Your session score is: ' + session + '</h3>');
       }
+
+
 
     });
 
     // PLAYER 2 HOLDS
     $("#player-2-hold").click(function(event) {
       score = playerTwo.hold();
-      if (score >= 100) {
+      if (score >= 10) {
         $("#player-2-shake").hide();
         $("#player-2-hold").hide();
         $("#player-1-shake").hide();
@@ -214,6 +224,7 @@ $(document).ready(function() {
       } else {
         player1startTurn();
         $("#player-2-score").html('<h3>' + 'Your total score is: ' + score + '</h3>');
+        $("#player-2-session").html('<h3>'  + 'Your session score is: 0</h3>');
       }
     });
   });
