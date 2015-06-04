@@ -20,22 +20,86 @@ Player.prototype.hold = function() {
   return this.score;
 }
 
+// START PLAYER 2's TURN
+var player2startTurn = function() {
+  $("#player-1-shake").hide();
+  $("#player-1-hold").hide();
+  $("#player-2-shake").show();
+  $("#player-2-hold").show();
+}
+
+// START PLAYER 1'S TURN
+var player1startTurn = function() {
+  $("#player-2-shake").hide();
+  $("#player-2-hold").hide();
+  $("#player-1-shake").show();
+  $("#player-1-hold").show();
+}
+
+// animate the party pig
+function pigLoop() {
+    console.log("animating..");
+    $({deg: -40}).animate({deg: 20}, {
+        duration: 1000,
+        step: function(now) {
+            $('#party_pig').css({
+                transform: 'rotate(' + now + 'deg)'
+            });
+        }, complete: function(){ pigLoopLeft() }
+    });
+}
+
+function pigLoopLeft() {
+    console.log("animating..");
+    $({deg: 20}).animate({deg: -40}, {
+        duration: 1000,
+        step: function(now) {
+            $('#party_pig').css({
+                transform: 'rotate(' + now + 'deg)'
+            });
+        }, complete: function(){ pigLoop() }
+    });
+}
+
+// WIN
+var win = function() {
+  $(".pig").show();
+  pigLoop();
+  $(".background").show();
+}
+
+
 $(document).ready(function() {
 
+  player1startTurn();
+
+  //PLAYER 1
   $("form#add-player-1").submit(function() {
+    // PLAYER 1 NAME
     event.preventDefault();
     var name = $("input#player-1-name").val();
     var playerOne = new Player(name);
     $("#add-player-1").hide();
     $("#display-name-1").html('<h2>' + playerOne.name + '</h2>');
+
+    //PLAYER 1 ROLLS
     $("#player-1-shake").click(function(event) {
       var roll1 = playerOne.roll();
-      $("#player-1-roll").html('<h4>' + 'You rolled a: '  + roll1 + '</h4>');
+      var littlePigsHTML = "";
+      for (var i = 0; i < roll1; i++) {
+        littlePigsHTML += '<img class="little-pig player1littlePig" src="./img/pig_icon.png" alt="piggy" />';
+      }
+
+      $("#player-1-roll").html('<h4>' + littlePigsHTML + '</h4>');
+        // animate the little pigs
+        $( ".player1littlePig" ).animate({
+          opacity: 1,
+          left: "+=50",
+          height: "20px"
+        }, 800, function() {});
+
         if (roll1 < 2) {
-          $("#player-1-shake").hide();
-          $("#player-1-hold").hide();
-          $("#player-2-shake").show();
-          $("#player-2-hold").show();
+          player2startTurn();
           var score = playerOne.score;
           $("#player-1-score").html('<h3>' + 'Your total score is: ' + score + '</h3>');
         } else {
@@ -43,39 +107,53 @@ $(document).ready(function() {
           $("#player-1-session").html('<h3>' + 'Your session score is: ' + session + '</h3>');
         }
       });
+
+    //PLAYER 1 HOLDS
     $("#player-1-hold").click(function(event) {
       score = playerOne.hold();
-      if (score >= 100) {
+      if (score >= 100) {  //WIN
         $("#player-2-shake").hide();
         $("#player-2-hold").hide();
         $("#player-1-shake").hide();
         $("#player-1-hold").hide();
         $("#player-1-score").html('<h3>' + 'Your total score is: ' + score + '</h3>');
-        alert("PLAYER ONE WINS MOFO, OINK OINK");
-      } else {
-        $("#player-1-shake").hide();
-        $("#player-1-hold").hide();
-        $("#player-2-shake").show();
-        $("#player-2-hold").show();
+        // alert("PLAYER ONE WINS MOFO, OINK OINK");
+        win();
+      } else { //NEXT PLAYER
+        player2startTurn();
         $("#player-1-score").html('<h3>' + 'Your total score is: ' + score + '</h3>');
       }
     });
   });
 
+  // PLAYER 2
   $("form#add-player-2").submit(function() {
     event.preventDefault();
+    // PLAYER 2 NAME
     var name = $("input#player-2-name").val();
     var playerTwo = new Player(name);
     $("#add-player-2").hide();
     $("#display-name-2").html('<h2>' + playerTwo.name + '</h2>');
+
+    // PLAYER 2 ROLLS
     $("#player-2-shake").click(function(event) {
       var roll2 = playerTwo.roll();
-      $("#player-2-roll").html('<h4>' + 'You rolled a: ' + roll2 + '</h4>');
+
+      var littlePigsHTML = "";
+      for (var i = 0; i < roll2; i++) {
+        littlePigsHTML += '<img class="little-pig player2littlePig" src="./img/pig_icon.png" alt="piggy" />';
+      }
+
+      $("#player-2-roll").html('<h4>' + littlePigsHTML + '</h4>');
+        // animate the little pigs
+        $( ".player2littlePig" ).animate({
+          opacity: 1,
+          left: "+=50",
+          height: "20px"
+        }, 800, function() {});
+
       if (roll2 < 2) {
-        $("#player-2-shake").hide();
-        $("#player-2-hold").hide();
-        $("#player-1-shake").show();
-        $("#player-1-hold").show();
+        player1startTurn();
         var score = playerTwo.score;
         $("#player-2-score").html('<h3>' + 'Your total score is: ' + score + '</h3>');
       } else {
@@ -83,6 +161,8 @@ $(document).ready(function() {
         $("#player-2-session").html('<h3>'  + 'Your session score is: ' + session + '</h3>');
       }
     });
+
+    // PLAYER 2 HOLDS
     $("#player-2-hold").click(function(event) {
       score = playerTwo.hold();
       if (score >= 100) {
@@ -91,12 +171,9 @@ $(document).ready(function() {
         $("#player-1-shake").hide();
         $("#player-1-hold").hide();
         $("#player-2-score").html('<h3>' + 'Your total score is: ' + score + '</h3>');
-        alert("PLAYER TWO WINS MOFO, OINK OINK");
+        win();
       } else {
-        $("#player-2-shake").hide();
-        $("#player-2-hold").hide();
-        $("#player-1-shake").show();
-        $("#player-1-hold").show();
+        player1startTurn();
         $("#player-2-score").html('<h3>' + 'Your total score is: ' + score + '</h3>');
       }
     });

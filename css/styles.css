@@ -3,4 +3,31 @@ body {
   font-family: 'Bangers', cursive;
   background-image: url("http://3.bp.blogspot.com/_L4o1Jq3jQPE/S7iz2fRPSCI/AAAAAAAAAf8/p9ICw4V3ZZk/s1600/R0011445.jpg");
 
-  }
+}
+
+img.little-pig {
+  padding-left: 2px;
+  height: 4px;
+  opacity: 0.2;
+}
+
+div.pig {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -225px;
+  margin-left: -225px;
+  z-index: 100;
+}
+
+div.background {
+  display: none;
+  top: 0;
+  left: 0;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,51,204,0.7);
+  z-index: -1;
+}
