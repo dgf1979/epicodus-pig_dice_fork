@@ -1,3 +1,7 @@
+var aiIsPlaying = false;
+var playerOne = new Player("Player1");
+var playerTwo = new Player("Player2");
+
 function Player(name) {
   this.name = name
   this.score = 0
@@ -20,13 +24,6 @@ Player.prototype.hold = function() {
   return this.score;
 }
 
-// START PLAYER 2's TURN
-var player2startTurn = function() {
-  $("#player-1-shake").hide();
-  $("#player-1-hold").hide();
-  $("#player-2-shake").show();
-  $("#player-2-hold").show();
-}
 
 // START PLAYER 1'S TURN
 var player1startTurn = function() {
@@ -34,6 +31,34 @@ var player1startTurn = function() {
   $("#player-2-hold").hide();
   $("#player-1-shake").show();
   $("#player-1-hold").show();
+}
+
+// START PLAYER 2's TURN
+var player2startTurn = function() {
+  $("#player-1-shake").hide();
+  $("#player-1-hold").hide();
+  $("#player-2-shake").show();
+  $("#player-2-hold").show();
+
+  if (aiIsPlaying === true) { aiPlay(0) };
+}
+
+// AI Player 2 logic
+var aiPlay = function(turnScore) {
+  console.log("AI checking..");
+  console.log("AI turn score is: " + turnScore);
+
+  if (turnScore < 20) {
+    setTimeout(function(){
+      console.log("AI is rolling");
+      $("#player-2-shake").trigger("click");
+    }, 1000);
+  } else {
+    setTimeout(function(){
+      console.log("AI is holding");
+      $("#player-2-hold").trigger("click");
+    }, 1000);
+  }
 }
 
 // animate the party pig
@@ -72,6 +97,15 @@ var win = function() {
 $(document).ready(function() {
 
   $("#new-game").show();
+
+  // game type select handlers
+  $("#single-player").click(function () {
+    $("#new-game").hide();
+    aiIsPlaying = true;
+  });
+  $("#multi-player").click(function () {
+    $("#new-game").hide();
+  });
 
   player1startTurn();
 
@@ -161,7 +195,10 @@ $(document).ready(function() {
       } else {
         var session = playerTwo.session;
         $("#player-2-session").html('<h3>'  + 'Your session score is: ' + session + '</h3>');
+
+        if (aiIsPlaying === true) { aiPlay(playerTwo.session) };
       }
+
     });
 
     // PLAYER 2 HOLDS
