@@ -71,6 +71,8 @@ var win = function() {
 
 $(document).ready(function() {
 
+  $("#new-game").show();
+
   player1startTurn();
 
   //PLAYER 1
